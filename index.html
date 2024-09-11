@@ -8,39 +8,36 @@
 </head>
 <body>
   <header>
-    <h1>Star Wars Encyclopedia</h1>
-    <nav>
-      <a href="#people">People</a>
-      <a href="#planets">Planets</a>
-      <a href="#starships">Starships</a>
-      <a href="#films">Films</a>
-    </nav>
+    <div class="container">
+      <h1>Star Wars Encyclopedia</h1>
+      <form id="search-form">
+        <input type="text" id="search-input" placeholder="Search..." aria-label="Search">
+        <button type="submit">Search</button>
+      </form>
+    </div>
   </header>
 
-  <main>
-    <section id="people">
-      <h2>People</h2>
-      <div id="people-list"></div>
-    </section>
+  <div id="content-wrapper" class="container">
+    <aside id="sidebar">
+      <div id="categories">
+        <!-- Dynamic categories will be populated here -->
+      </div>
+      <div id="sidebar-content">
+        <!-- Dynamic content will be populated here -->
+      </div>
+    </aside>
 
-    <section id="planets">
-      <h2>Planets</h2>
-      <div id="planets-list"></div>
-    </section>
-
-    <section id="starships">
-      <h2>Starships</h2>
-      <div id="starships-list"></div>
-    </section>
-
-    <section id="films">
-      <h2>Films</h2>
-      <div id="films-list"></div>
-    </section>
-  </main>
+    <div id="main-content">
+      <div id="detail-content">
+        <!-- Detailed view will be shown here -->
+      </div>
+    </div>
+  </div>
 
   <footer>
-    <p>Star Wars Encyclopedia &copy; 2024</p>
+    <div class="container">
+      <p>Star Wars Encyclopedia &copy; 2024</p>
+    </div>
   </footer>
 
   <script src="app.js"></script>

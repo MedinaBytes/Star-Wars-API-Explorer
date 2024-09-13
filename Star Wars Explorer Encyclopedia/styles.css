@@ -1,0 +1,149 @@
+/* General Styling */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Orbitron', sans-serif; /* Star Wars-themed font */
+  background-color: #000; /* Dark background for Star Wars look */
+  color: #FFE81F; /* Star Wars yellow color */
+}
+
+.container {
+  display: flex;
+  flex-direction: row; /* Set to row for a side-by-side layout */
+  min-height: 100vh; /* Ensure container fills full height */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #FFE81F;
+  z-index: 1000; /* Ensure header stays on top */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.site-title {
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-form input {
+  padding: 5px;
+  font-size: 16px;
+  background-color: #333;
+  border: 1px solid #FFE81F;
+  color: #FFE81F;
+}
+
+.search-form button {
+  padding: 6px 12px;
+  font-size: 16px;
+  background-color: #FFE81F;
+  color: #000;
+  margin-left: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 250px;
+  background-color: #222;
+  padding: 20px;
+  color: #FFE81F;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  color: #FFE81F;
+}
+
+.category-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+  font-size: 18px;
+  color: #FFE81F;
+}
+
+.category-link i {
+  margin-right: 10px;
+  color: #FFE81F;
+}
+
+.category-link:hover {
+  color: #FFF;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #000; /* Dark background for content */
+}
+
+#detail-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#detail-content li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc; /* Light border for separation */
+  cursor: pointer;
+  background-color: #111; /* Dark background for list items */
+  color: #FFE81F;
+}
+
+#detail-content li:hover {
+  background-color: #222;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #000;
+  color: #FFE81F;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+}
+
+/* Ensure the footer stays after all the content and at the bottom if page content is short */
+html, body {
+  height: 100%;
+}
+
+.container {
+  flex: 1;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    border-bottom: 2px solid #FFE81F;
+    border-right: none;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+}

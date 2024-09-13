@@ -10,6 +10,15 @@ const categories = {
   starships: 36
 };
 
+const categoryIcons = {
+  people: 'fas fa-user',
+  planets: 'fas fa-globe',
+  films: 'fas fa-film',
+  species: 'fas fa-dna',
+  vehicles: 'fas fa-car',
+  starships: 'fas fa-space-shuttle'
+};
+
 const characterImages = {}; // Store character images
 let allItems = {}; // Store all items for search functionality
 
@@ -18,12 +27,20 @@ async function initializeCategories() {
   const categoriesDiv = document.getElementById('categories');
   categoriesDiv.innerHTML = ''; // Clear previous categories if any
 
-  for (const category of Object.keys(categories)) {
+  for (const [category, iconClass] of Object.entries(categoryIcons)) {
     const categoryLink = document.createElement('div');
     categoryLink.className = 'category-link';
     categoryLink.dataset.category = category;
-    categoryLink.textContent = capitalizeFirstLetter(category);
 
+    const icon = document.createElement('i');
+    icon.className = iconClass;
+    categoryLink.appendChild(icon);
+
+    const categoryName = document.createElement('span');
+    categoryName.textContent = capitalizeFirstLetter(category);
+    categoryLink.appendChild(categoryName);
+
+    // When a category is clicked, fetch its data and display in details screen
     categoryLink.addEventListener('click', () => fetchCategoryData(category));
 
     categoriesDiv.appendChild(categoryLink);
@@ -74,7 +91,10 @@ async function fetchCategoryData(category) {
       }
     }
     allItems[category] = results; // Store items for search functionality
-    populateSidebar(category, results);
+
+    // Display the fetched category data in the details section
+    displayCategoryResults(category, results);
+
   } catch (error) {
     console.error('Error fetching category data:', error);
   }
@@ -86,25 +106,25 @@ async function fetchAllCategoryData() {
   await Promise.all(promises);
 }
 
-// Populate the sidebar with items for a specific category
-function populateSidebar(category, items) {
-  const sidebarContent = document.getElementById('sidebar-content');
-  sidebarContent.innerHTML = '';
+// Display category results in the details section
+function displayCategoryResults(category, items) {
+  const detailContent = document.getElementById('detail-content');
+  detailContent.innerHTML = ''; // Clear previous content
 
-  const itemList = document.createElement('ul');
+  const resultList = document.createElement('ul');
 
   items.forEach(item => {
-    const itemLi = document.createElement('li');
-    itemLi.textContent = item.name || item.title;
-    itemLi.dataset.category = category;
-    itemLi.dataset.url = item.url; // Storing URL as a unique identifier
+    const resultLi = document.createElement('li');
+    resultLi.textContent = item.name || item.title;
+    resultLi.dataset.category = category;
+    resultLi.dataset.url = item.url;
 
-    itemLi.addEventListener('click', () => fetchDetails(itemLi.dataset.category, itemLi.dataset.url));
+    resultLi.addEventListener('click', () => fetchDetails(resultLi.dataset.category, resultLi.dataset.url));
 
-    itemList.appendChild(itemLi);
+    resultList.appendChild(resultLi);
   });
 
-  sidebarContent.appendChild(itemList);
+  detailContent.appendChild(resultList);
 }
 
 // Fetch details from a given URL
@@ -211,7 +231,7 @@ async function fetchDetails(category, url) {
   }
 }
 
-// Search across all categories
+// Search across all categories and display results in the detail section
 function searchAllCategories(query) {
   query = query.toLowerCase();
   const filteredItems = [];
@@ -225,7 +245,28 @@ function searchAllCategories(query) {
     })));
   });
 
-  populateSidebar('search', filteredItems);
+  displaySearchResults(filteredItems);
+}
+
+// Display search results in the details section
+function displaySearchResults(results) {
+  const detailContent = document.getElementById('detail-content');
+  detailContent.innerHTML = ''; // Clear previous content
+
+  const resultList = document.createElement('ul');
+
+  results.forEach(result => {
+    const resultLi = document.createElement('li');
+    resultLi.textContent = result.name || result.title;
+    resultLi.dataset.category = result.category;
+    resultLi.dataset.url = result.url;
+
+    resultLi.addEventListener('click', () => fetchDetails(resultLi.dataset.category, resultLi.dataset.url));
+
+    resultList.appendChild(resultLi);
+  });
+
+  detailContent.appendChild(resultList);
 }
 
 // Handle search form input
@@ -233,14 +274,6 @@ document.getElementById('search-form').addEventListener('submit', event => {
   event.preventDefault(); // Prevent form from submitting the traditional way
   const query = document.getElementById('search-input').value;
   searchAllCategories(query);
-});
-
-// Handle category selection
-document.querySelectorAll('.category-link').forEach(link => {
-  link.addEventListener('click', () => {
-    const category = link.dataset.category;
-    fetchCategoryData(category);
-  });
 });
 
 // Fetch data on page load
